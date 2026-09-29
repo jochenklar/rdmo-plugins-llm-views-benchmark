@@ -14,19 +14,14 @@ TIMEOUT_ASYNC = 900_000
 
 VIEWPORT = {'width': 1200, 'height': 1200}
 
-# PROVIDER = 'OpenAI'
-# PROVIDER = 'Anthropic'
-PROVIDER = 'ChatAI'
-# PROVIDER = 'Ollama'
-# PROVIDER = 'MistralAI'
-
 MODELS = {
     'OpenAI': {
         'gpt-4.1-mini',
         'gpt-4.1-nano',
+        'gpt-5.4',
+        'gpt-5.4-mini',
+        'gpt-5.4-nano',
         'gpt-5.5',
-        'gpt-5.5-mini',
-        'gpt-5.5-nano',
         'gpt-6-astra',
         'gpt-6-luna',
         'gpt-6-sol',
@@ -37,10 +32,23 @@ MODELS = {
         'claude-opus-4-6',
         'claude-opus-4-7',
         'claude-opus-4-8',
-        'claude-opus-5-0',
+        'claude-opus-5',
         'claude-opus-5-5',
         'claude-sonnet-4-6',
         'claude-sonnet-5',
+        'claude-sonnet-5-5',
+    },
+    'MistralAI': {
+        'ministral-14b-2512',
+        'ministral-3b-2512',
+        'ministral-8b-2512',
+        'mistral-large-2512',
+        'mistral-medium-2508',
+        'mistral-medium-3',
+        'mistral-medium-3-5',
+        'mistral-small-2603',
+        'zai-glm-5-2',
+        'zai-glm-5-3',
     },
     'ChatAI': {
         'apertus-70b-instruct-2509',
@@ -64,12 +72,5 @@ MODELS = {
         'llama3.1:8b',
         'gpt-oss:20b',
         'mistral:7b',
-    },
-    'MistralAI': {
-        'mistral-large-2512',
-        'mistral-medium-2508',
-        'mistral-medium-3',
-        'mistral-medium-3-5',
-        'mistral-small-2603',
     },
 }

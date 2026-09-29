@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 
@@ -7,7 +8,6 @@ from config import (
     MODELS,
     PASSWORD,
     PDF_PATH,
-    PROVIDER,
     TIMEOUT,
     TIMEOUT_ASYNC,
     USERNAME,
@@ -19,6 +19,11 @@ os.environ['DEBUG'] = 'pw:api'  # show Playwright's own log of every action
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('provider', choices=MODELS.keys())
+
+    args = parser.parse_args()
+
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False)
         page = browser.new_page(viewport=VIEWPORT)
@@ -31,11 +36,11 @@ def main():
         page.click('input[type="submit"]')
         page.wait_for_load_state('networkidle')
 
-        for model in MODELS[PROVIDER]:
-            json_path = JSON_PATH / PROVIDER / f'{model}.json'
+        for model in MODELS[args.provider]:
+            json_path = JSON_PATH / args.provider / f'{model.replace(':', '-')}.json'
             json_path.parent.mkdir(exist_ok=True, parents=True)
 
-            pdf_path = PDF_PATH / PROVIDER / f'{model}.pdf'
+            pdf_path = PDF_PATH / args.provider / f'{model.replace(':', '-')}.pdf'
             pdf_path.parent.mkdir(exist_ok=True, parents=True)
 
             # go to project
@@ -43,7 +48,7 @@ def main():
             page.wait_for_load_state('networkidle')
 
             # find the view for the description
-            row = page.locator('tr').filter(has=page.get_by_role('cell', name=f'{PROVIDER}, {model}', exact=True))
+            row = page.locator('tr').filter(has=page.get_by_role('cell', name=f'{args.provider}, {model}', exact=True))
             row.get_by_role('link').first.click()
 
             # wait for the error or the panel
